@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
-// const url = "";
+const { DB_USER, DB_PASS } = process.env;
+
+const url = `mongodb+srv://${DB_USER}:${DB_PASS}@cluster0.jsj1vov.mongodb.net/`;
 
 mongoose
   .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
