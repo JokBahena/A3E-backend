@@ -1,6 +1,8 @@
 const { Response, Router } = require("express");
 const { login, forgotPassword } = require("./auth.gateway");
 const { transporter, template } = require("../../../utils/email-service");
+require("dotenv").config();
+const { isTokenExp } = require("../../../config/jwt");
 
 //Function to signin
 const signin = async (req, res = Response) => {
@@ -49,12 +51,37 @@ const lostPassword = async (req, res = Response) => {
   }
 };
 
+//Function to check if token is expired
+const isTokenExpired = async (req, res = Response) => {
+  try {
+    //Obtain token
+    const result = await isTokenExp(req.headers.authorization.split(" ")[1]);
+    if (result) {
+      //Token expired
+      return res.status(400).json({
+        msg: "Token expired",
+      });
+    } else {
+      //Token valid
+      return res.status(200).json({
+        msg: "Token valid",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      msg: "Error to verify token",
+    });
+  }
+};
+
 //Route to signin
 const authRouter = Router();
 
 //Define route
 authRouter.post("/signin", [], signin);
 authRouter.post("/lostPassword", [], lostPassword);
+authRouter.get("/verifyToken", [], isTokenExpired);
 
 //Export route
 module.exports = { authRouter };

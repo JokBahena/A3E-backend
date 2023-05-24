@@ -18,8 +18,8 @@ const login = async (email, password) => {
       //Generate token
       return {
         token: generateToken({
-          email: userExist.email,
           id: userExist._id,
+          email: userExist.email,
           name: userExist.name,
         }),
       };
