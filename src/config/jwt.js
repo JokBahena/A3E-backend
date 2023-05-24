@@ -1,16 +1,16 @@
-const jtw = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 //Function to generate token
 const generateToken = (payload) => {
-  return jtw.sign(payload, process.env.SECRET, { expiresIn: "5m" });
+  return jwt.sign(payload, process.env.SECRET, { expiresIn: "5m" });
 };
 
 //Function to verify token
 const verifyToken = async (token) => {
   try {
     //Verify token
-    const decoded = jtw.verify(token, process.env.SECRET);
+    const decoded = jwt.verify(token, process.env.SECRET);
     //Return decoded
     return decoded;
   } catch (error) {
@@ -54,3 +54,4 @@ module.exports = {
   isTokenExp,
   checkTimeToken,
 };
+
