@@ -1,13 +1,13 @@
 const { Response, Router } = require("express");
 const { save } = require("./user.gateway");
 
-//Funcion para guardar y enviar los datos
+//Function to save and send data
 const saveAndFlush = async (req, res = Response) => {
   try {
-    //Extraer datos del body
+    //Extract data from body
     const { name, lastname, email, password } = req.body;
 
-    //Llamar funcion para guardar y enviar los datos
+    //Call function to save data
     const user = await save(name, lastname, email, password);
     res.status(200).json(user);
   } catch (error) {
@@ -18,11 +18,11 @@ const saveAndFlush = async (req, res = Response) => {
   }
 };
 
-//Ruta para guardar y enviar los datos
+//Route to save data
 const userRouter = Router();
 
-//Definir ruta
+//Define route
 userRouter.post("/createUser", [], saveAndFlush);
 
-//Exportar ruta
+//Export route
 module.exports = { userRouter };

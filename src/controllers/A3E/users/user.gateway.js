@@ -1,29 +1,41 @@
 const { hashPassword } = require("../../../utils/password-bcrypt");
-const User = require("../../../models/A3E/Users");
+const User = require("../../../models/A3E/user");
 
-//Funcion para guardar un usuario
-const save = async (name, lastname, email, password, role, status) => {
+//Function to save and send data
+const save = async (name, lastname, email, password) => {
   try {
-    //Validar campos
+    //Validate fields
     if (!name || !lastname || !email || !password)
-      throw new Error("Missing fields");
+      return { msg: "Missing fields" };
 
-    //Llamar funcion para encriptar la contraseña
+    //Validate email
+    const validDomain = email.endsWith("@a3e.com.mx");
+    if (!validDomain)
+      return {
+        msg: "Invalid email domain. Only @a3e.com.mx domain is allowed.",
+      };
+
+    //If user exists
+    const userExist = await User.findOne({ email });
+    if (userExist) return { msg: "User already exists" };
+
+    //Call function to hash password
     const hashedPassword = await hashPassword(password);
 
-    //Crear usuario
+    //Create user
     const user = new User({
       name,
       lastname,
       email,
       password: hashedPassword,
     });
-    //Guardar usuario
+
+    //Save user
     return await user.save();
   } catch (error) {
     console.log(error);
   }
 };
 
-//Exportar funcion
+//Export function
 module.exports = { save };

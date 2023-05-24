@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-// Crear esquema de usuarios
+//Create schema
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   lastname: { type: String, required: true },
@@ -10,5 +10,5 @@ const userSchema = new mongoose.Schema({
   status: { type: Boolean, default: true },
 });
 
-// Exportar modelo
+//Export model
 module.exports = mongoose.model("User", userSchema);

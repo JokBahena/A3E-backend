@@ -1,13 +1,13 @@
 const { Response, Router } = require("express");
 const { login } = require("./auth.gateway");
 
-//Funcion para iniciar sesion
+//Function to signin
 const signin = async (req, res = Response) => {
   try {
-    //Extraer datos del body
+    //Extract data from body
     const { email, password } = req.body;
 
-    //Llamar funcion para iniciar sesion
+    //Call function to login
     const token = await login(email, password);
     res.status(200).json(token);
   } catch (error) {
@@ -18,11 +18,11 @@ const signin = async (req, res = Response) => {
   }
 };
 
-//Ruta para iniciar sesion
+//Route to signin
 const authRouter = Router();
 
-//Definir ruta
+//Define route
 authRouter.post("/signin", [], signin);
 
-//Exportar ruta
+//Export route
 module.exports = { authRouter };

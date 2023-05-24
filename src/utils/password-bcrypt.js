@@ -1,9 +1,9 @@
 const bcrypt = require("bcrypt");
 
-//Funcion para encriptar la contraseña
+//Function to hash password
 const hashPassword = async (password) => {
   return await bcrypt.hash(password, 10);
 };
 
-//Exportar funcion
+//Export function
 module.exports = { hashPassword };

@@ -1,9 +1,9 @@
 const bcrypt = require("bcrypt");
 
-//Funcion para validar la contraseña
+//Function to validate password
 const validatePassword = async (password, hashedPassword) => {
   return await bcrypt.compare(password, hashedPassword);
 };
 
-//Exportar funcion
+//Export function
 module.exports = { validatePassword };

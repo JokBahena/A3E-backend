@@ -1,6 +1,6 @@
 const { generateToken } = require("../../../config/jwt");
 const { validatePassword } = require("../../../utils/validate-password");
-const User = require("../../../models/A3E/Users");
+const User = require("../../../models/A3E/user");
 
 //Function to login
 const login = async (email, password) => {
@@ -9,9 +9,7 @@ const login = async (email, password) => {
     const user = await User.findOne({ email });
 
     //Validate user
-    if (!user) {
-      return { error: "User not found" };
-    }
+    if (!user) return { msg: "User not found" };
 
     //Validate password
     if (await validatePassword(password, user.password)) {
@@ -20,11 +18,11 @@ const login = async (email, password) => {
         token: generateToken({
           email: user.email,
           id: user._id,
+          name: user.name,
         }),
       };
     }
-    //Throw error
-    throw new Error("Invalid password");
+    return { msg: "Invalid password" };
   } catch (error) {
     console.log(error);
   }

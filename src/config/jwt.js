@@ -1,12 +1,12 @@
 const jtw = require("jsonwebtoken");
 require("dotenv").config();
 
-//Funcion para generar el token
+//Function to generate token
 const generateToken = (payload) => {
   return jtw.sign(payload, process.env.SECRET, { expiresIn: "1h" });
 };
 
-//Exportar funcion
+//Export function
 module.exports = {
   generateToken,
 };
