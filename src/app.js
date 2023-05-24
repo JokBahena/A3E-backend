@@ -1,7 +1,7 @@
 const { app } = require("./config/express");
 
 //Connect to database
-const db = require("./utils/mongodb");
+const db = require("./utils/db/mongodb");
 
 //Start server
 const main = () => {
