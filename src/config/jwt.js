@@ -3,7 +3,7 @@ require("dotenv").config();
 
 //Function to generate token
 const generateToken = (payload) => {
-  return jwt.sign(payload, process.env.SECRET, { expiresIn: "5m" });
+  return jwt.sign(payload, process.env.SECRET, { expiresIn: "30m"});
 };
 
 //Function to verify token

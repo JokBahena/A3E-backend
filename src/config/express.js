@@ -3,7 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 //Import routes
-const { authRouter, userRouter } = require("../controllers/routes");
+const { authRouter, userRouter, topicRouter } = require("../controllers/routes");
 
 //Create app express
 const app = express();
@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
 //Configurate cors
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
+app.use("/api/topic", topicRouter);
 
 //Export app
 module.exports = {

@@ -9,7 +9,14 @@ const saveAndFlush = async (req, res = Response) => {
 
     //Call function to save data
     const user = await save(name, lastname, email, password);
-    res.status(200).json(user);
+
+
+    //If user exists
+    if (!user) {
+      res.status(200).json({ msg: "User saved" });
+    } else {
+      res.status(400).json({ msg: user.msg });
+    }
   } catch (error) {
     console.log(error);
     res.status(400).json({
@@ -22,7 +29,7 @@ const saveAndFlush = async (req, res = Response) => {
 const userRouter = Router();
 
 //Define route
-userRouter.post("/createUser", [], saveAndFlush);
+userRouter.post("/create-user", [], saveAndFlush);
 
 //Export route
 module.exports = { userRouter };

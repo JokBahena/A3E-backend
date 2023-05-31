@@ -80,8 +80,8 @@ const authRouter = Router();
 
 //Define route
 authRouter.post("/signin", [], signin);
-authRouter.post("/lostPassword", [], lostPassword);
-authRouter.get("/verifyToken", [], isTokenExpired);
+authRouter.post("/forgot-password", [], lostPassword);
+authRouter.get("/verify-token", [], isTokenExpired);
 
 //Export route
 module.exports = { authRouter };
