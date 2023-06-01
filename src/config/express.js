@@ -7,7 +7,8 @@ const {
   authRouter,
   userRouter,
   topicRouter,
-  humanResourceRouter,
+  vacancieRouter,
+  internRouter,
 } = require("../controllers/routes");
 
 //Create app express
@@ -26,7 +27,8 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/topic", topicRouter);
-app.use("/api/human-resource", humanResourceRouter);
+app.use("/api/vacancie", vacancieRouter);
+app.use("/api/intern", internRouter);
 
 //Export app
 module.exports = {
