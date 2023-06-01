@@ -10,12 +10,9 @@ const saveAndFlush = async (req, res = Response) => {
     //Call function to save data
     const topic = await save(section);
 
-    //Send response
-    if (!topic) {
-      res.status(200).json({ msg: "Section saved" });
-    } else {
-      res.status(400).json({ msg: topic.msg });
-    }
+    //If topic exists
+    if (topic.msg) return res.status(400).json({ msg: topic.msg });
+    return res.status(200).json({ msg: "Topic saved" });
   } catch (error) {
     console.log(error);
     res.status(400).json({

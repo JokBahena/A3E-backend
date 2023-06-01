@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const topicSchema = new mongoose.Schema({
   section: [
     {
-      nameSection: { type: String, required: true },
+      nameSection: { type: String, required: true, unique: true },
       topic: [
         {
           nameTopic: { type: String, required: true },

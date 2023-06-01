@@ -6,8 +6,9 @@ const save = async (section) => {
     if (!section) return { msg: "Missing fields" };
 
     //If topic exists
-    const sectionExist = await Topic.findOne({ nameSection: section.nameSection });
-    console.log(topicExist);
+    const sectionExist = await Topic.findOne({
+      nameSection: section.nameSection,
+    });
 
     //If section exists
     if (sectionExist) return { msg: "Section already exists" };

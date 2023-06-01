@@ -1,5 +1,5 @@
-const { hashPassword } = require("../../../utils/password/password-bcrypt");
-const User = require("../../../models/A3E/user");
+const { hashPassword } = require("../../utils/password/password-bcrypt");
+const User = require("../../models/user");
 
 //Function to save and send data
 const save = async (name, lastname, email, password) => {

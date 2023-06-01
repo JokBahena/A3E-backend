@@ -2,7 +2,7 @@ const { generateToken } = require("../../../config/jwt");
 const {
   validatePassword,
 } = require("../../../utils/password/validate-password");
-const User = require("../../../models/A3E/user");
+const User = require("../../../models/user");
 
 //Function to login
 const login = async (email, password) => {

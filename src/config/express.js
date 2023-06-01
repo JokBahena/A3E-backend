@@ -3,7 +3,12 @@ const cors = require("cors");
 require("dotenv").config();
 
 //Import routes
-const { authRouter, userRouter, topicRouter } = require("../controllers/routes");
+const {
+  authRouter,
+  userRouter,
+  topicRouter,
+  humanResourceRouter,
+} = require("../controllers/routes");
 
 //Create app express
 const app = express();
@@ -21,6 +26,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/topic", topicRouter);
+app.use("/api/human-resource", humanResourceRouter);
 
 //Export app
 module.exports = {

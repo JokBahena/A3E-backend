@@ -10,13 +10,9 @@ const saveAndFlush = async (req, res = Response) => {
     //Call function to save data
     const user = await save(name, lastname, email, password);
 
-
     //If user exists
-    if (!user) {
-      res.status(200).json({ msg: "User saved" });
-    } else {
-      res.status(400).json({ msg: user.msg });
-    }
+    if (user.msg) return res.status(400).json({ msg: user.msg });
+    return res.status(200).json({ msg: "User saved" });
   } catch (error) {
     console.log(error);
     res.status(400).json({
