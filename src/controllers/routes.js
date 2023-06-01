@@ -7,6 +7,9 @@ const {
 const {
   internRouter,
 } = require("./A3E/human-resource/intern/intern.controller");
+const {
+  subscriptionRouter,
+} = require("./A3E/subscription/subscription.controller");
 
 //Export routes
 module.exports = {
@@ -15,4 +18,5 @@ module.exports = {
   topicRouter,
   vacancieRouter,
   internRouter,
+  subscriptionRouter,
 };

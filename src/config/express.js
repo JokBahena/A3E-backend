@@ -9,6 +9,7 @@ const {
   topicRouter,
   vacancieRouter,
   internRouter,
+  subscriptionRouter,
 } = require("../controllers/routes");
 
 //Create app express
@@ -29,6 +30,7 @@ app.use("/api/user", userRouter);
 app.use("/api/topic", topicRouter);
 app.use("/api/vacancie", vacancieRouter);
 app.use("/api/intern", internRouter);
+app.use("/api/subscription", subscriptionRouter);
 
 //Export app
 module.exports = {
