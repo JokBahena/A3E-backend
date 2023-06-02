@@ -10,6 +10,7 @@ const {
 const {
   subscriptionRouter,
 } = require("./A3E/subscription/subscription.controller");
+const { bannerRouter } = require("./A3E/banner/banner.controller");
 
 //Export routes
 module.exports = {
@@ -19,4 +20,5 @@ module.exports = {
   vacancieRouter,
   internRouter,
   subscriptionRouter,
+  bannerRouter,
 };

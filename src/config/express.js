@@ -10,6 +10,7 @@ const {
   vacancieRouter,
   internRouter,
   subscriptionRouter,
+  bannerRouter,
 } = require("../controllers/routes");
 
 //Create app express
@@ -31,6 +32,7 @@ app.use("/api/topic", topicRouter);
 app.use("/api/vacancie", vacancieRouter);
 app.use("/api/intern", internRouter);
 app.use("/api/subscription", subscriptionRouter);
+app.use("/api/banner", bannerRouter);
 
 //Export app
 module.exports = {
