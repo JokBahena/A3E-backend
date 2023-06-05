@@ -11,6 +11,7 @@ const {
   internRouter,
   subscriptionRouter,
   bannerRouter,
+  contactRouter,
 } = require("../controllers/routes");
 
 //Create app express
@@ -18,6 +19,9 @@ const app = express();
 
 //Configurate port
 app.set("port", process.env.PORT || 3000);
+
+//Configurate cors
+app.use(cors());
 
 app.use(express.json({ limit: "50mb" }));
 
@@ -33,6 +37,7 @@ app.use("/api/vacancie", vacancieRouter);
 app.use("/api/intern", internRouter);
 app.use("/api/subscription", subscriptionRouter);
 app.use("/api/banner", bannerRouter);
+app.use("/api/contact", contactRouter);
 
 //Export app
 module.exports = {

@@ -5,10 +5,10 @@ const { save } = require("./topic.gateway");
 const saveAndFlush = async (req, res = Response) => {
   try {
     //Extract data from body
-    const { section } = req.body;
+    const { nameSection, topics } = req.body;
 
     //Call function to save data
-    const topic = await save(section);
+    const topic = await save(nameSection, topics);
 
     //If topic exists
     if (topic.msg) return res.status(400).json({ msg: topic.msg });
