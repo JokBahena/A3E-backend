@@ -14,7 +14,7 @@ const save = async (nameSection, topics) => {
     //Create topic
     const topic = new Topic({
       nameSection: nameSection,
-      topic: topics,
+      topics: topics,
     });
 
     //Save topic
