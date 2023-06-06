@@ -12,6 +12,7 @@ const {
 } = require("./A3E/subscription/subscription.controller");
 const { bannerRouter } = require("./A3E/banner/banner.controller");
 const { contactRouter } = require("./A3E/contact/contact.controller");
+const { serviceRouter } = require("./A3E/service/service.controller");
 
 //Export routes
 module.exports = {
@@ -23,4 +24,5 @@ module.exports = {
   subscriptionRouter,
   bannerRouter,
   contactRouter,
+  serviceRouter,
 };

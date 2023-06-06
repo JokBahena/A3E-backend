@@ -23,10 +23,19 @@ const fileFilter = (req, file, cb) => {
       false
     );
   }
+
+  //acept pdf
+  if (file.mimetype === "application/pdf") {
+    // Accept file
+    cb(null, true);
+  } else {
+    // Reject file
+    cb(new Error("Solo se permiten archivos con la extension .pdf"), false);
+  }
 };
 
 //Upload file
-const upload = multer({ storage: storage, fileFilter: fileFilter });
+const upload = multer({ storage: storage });
 
 //Export function
 module.exports = { upload };

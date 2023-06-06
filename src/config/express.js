@@ -12,6 +12,7 @@ const {
   subscriptionRouter,
   bannerRouter,
   contactRouter,
+  serviceRouter,
 } = require("../controllers/routes");
 
 //Create app express
@@ -38,6 +39,7 @@ app.use("/api/intern", internRouter);
 app.use("/api/subscription", subscriptionRouter);
 app.use("/api/banner", bannerRouter);
 app.use("/api/contact", contactRouter);
+app.use("/api/service", serviceRouter);
 
 //Export app
 module.exports = {

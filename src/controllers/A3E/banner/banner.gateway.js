@@ -10,7 +10,7 @@ const save = async (title, description, imagePath, link) => {
     if (bannerExist) return { msg: "Banner already exists" };
 
     //Call function to upload image
-    const imageUrl = await uploadImage(imagePath, title);
+    const imageUrl = await uploadImage(imagePath, title, "banners");
 
     //If image upload fails
     if (!imageUrl) {
