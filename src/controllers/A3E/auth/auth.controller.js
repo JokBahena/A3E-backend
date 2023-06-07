@@ -79,7 +79,7 @@ const isTokenExpired = async (req, res = Response) => {
 const authRouter = Router();
 
 //Define route
-authRouter.post("/signin", [], signin);
+authRouter.post("/singin", [], signin);
 authRouter.post("/forgot-password", [], lostPassword);
 authRouter.get("/verify-token", [], isTokenExpired);
 

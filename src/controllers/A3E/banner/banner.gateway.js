@@ -64,15 +64,16 @@ const update = async (id, title, description, imagePath, link) => {
     //Get banner by id
     const banner = await Banner.findById(id);
 
-    //If banner exists
+    //If banner no exists
     if (!banner) return { msg: "Banner not found" };
 
     //If title is changed
     if (banner.title !== title) {
       await deleteImage(banner.title);
     }
+
     //Call function to upload image
-    const imageUrl = await uploadImage(imagePath, title);
+    const imageUrl = await uploadImage(imagePath, title, "banners");
 
     //If image upload fails
     if (!imageUrl) {

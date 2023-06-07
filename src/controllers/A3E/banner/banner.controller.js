@@ -47,7 +47,7 @@ const getById = async (req, res = Response) => {
   try {
     //Extract id from params
     const { id } = req.params;
-    
+
     //Call function to get banner by id
     const banner = await findById(id);
 
