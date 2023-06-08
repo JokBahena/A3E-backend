@@ -1,4 +1,4 @@
-const { generateToken } = require("../../../config/jwt");
+const { generateToken, verifyToken } = require("../../../config/jwt");
 const {
   validatePassword,
 } = require("../../../utils/password/validate-password");
@@ -21,10 +21,40 @@ const login = async (email, password) => {
           id: userExist._id,
           email: userExist.email,
           name: userExist.name,
+          role: userExist.role,
         }),
       };
     }
     return { msg: "Invalid password" };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//Function to renew token
+const renew = async (token) => {
+  try {
+    //Verify token
+    const decoded = await verifyToken(token);
+
+    //Validate token
+    if (!decoded) return { msg: "Invalid token" };
+
+    //Search user
+    const userExist = await User.findById(decoded.id);
+
+    //Validate user
+    if (!userExist) return { msg: "User not found" };
+
+    //Generate token
+    return {
+      token: generateToken({
+        id: userExist._id,
+        email: userExist.email,
+        name: userExist.name,
+        role: userExist.role,
+      }),
+    };
   } catch (error) {
     console.log(error);
   }
@@ -48,4 +78,4 @@ const forgotPassword = async (email) => {
 };
 
 //Export function
-module.exports = { login, forgotPassword };
+module.exports = { login, forgotPassword, renew };

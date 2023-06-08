@@ -6,6 +6,10 @@ const { deleteFolder } = require("../../../utils/cloudinary/delete-folder");
 const save = async (title, files, info, multimedias) => {
   try {
     let urls = [];
+
+    //If missing fields
+    if (!title) return { msg: "Title is required" };
+
     //If service exists
     const serviceExist = await Service.findOne({ title });
     if (serviceExist) return { msg: "Service already exists" };
@@ -83,6 +87,10 @@ const findById = async (id) => {
 const update = async (id, title, files, info, multimedias) => {
   try {
     let urls = [];
+
+    //If missing fields
+    if (!title) return { msg: "Title is required" };
+
     //If service exists
     const service = await Service.findById(id);
     if (!service) return { msg: "Service not found" };

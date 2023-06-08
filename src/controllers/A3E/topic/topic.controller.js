@@ -1,18 +1,52 @@
 const { Response, Router } = require("express");
 const { save, findAll, findById } = require("./topic.gateway");
+const { upload } = require("../../../config/multer-config");
 
 //Function to save and send data
 const saveAndFlush = async (req, res = Response) => {
   try {
+    let topics = [];
+    let multimedias = [];
+    let multimediasPath = [];
     //Extract data from body
-    const { nameSection, topics } = req.body;
+    const { nameSection, nameTopic, description } = req.body;
+
+    console.log("nameSection: ", nameSection);
+    console.log("nameTopic: ", nameTopic);
+    console.log("description: ", description);
+
+    //Get multimedias
+    if (req.files && req.files["multimedias"]) {
+      multimedias = req.files["multimedias"];
+    }
+
+    // Get the file path
+    if (multimedias) {
+      multimediasPath = multimedias.map((multimedia) => multimedia.path);
+    }
+
+    //Create array with nameTopic, description and multimedias
+    if (nameTopic || description) {
+      if (typeof nameTopic === "string" && typeof description === "string") {
+        topics.push({ nameTopic, description, multimediasPath });
+      } else if (Array.isArray(nameTopic) || Array.isArray(description)) {
+        topics = nameTopic.map((nameTopic, index) => ({
+          nameTopic,
+          description: description[index],
+          multimediasPath,
+        }));
+      }
+    }
+
+    console.log("multimediasPath: ", multimediasPath);
+    console.log("topics: ", topics);
 
     //Call function to save data
-    const topic = await save(nameSection, topics);
+    // const topic = await save(nameSection, topics);
 
     //If topic exists
-    if (topic.msg) return res.status(400).json({ msg: topic.msg });
-    return res.status(200).json({ msg: "Topic saved" });
+    // if (topic.msg) return res.status(400).json({ msg: topic.msg });
+    // return res.status(200).json({ msg: "Topic saved" });
   } catch (error) {
     console.log(error);
     res.status(400).json({
@@ -62,7 +96,15 @@ const getById = async (req, res = Response) => {
 const topicRouter = Router();
 
 //Define route
-topicRouter.post("/create-topic", [], saveAndFlush);
+topicRouter.post(
+  "/create-topic",
+  upload.fields([
+    {
+      name: "multimedias",
+    },
+  ]),
+  saveAndFlush
+);
 topicRouter.get("/getAll-topics", [], getAll);
 topicRouter.get("/getById-topic/:id", [], getById);
 

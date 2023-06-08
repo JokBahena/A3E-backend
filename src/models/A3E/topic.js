@@ -7,10 +7,9 @@ const topicSchema = new mongoose.Schema({
     {
       nameTopic: { type: String, required: true },
       description: { type: String, required: true },
-      multimedia: [
+      multimedias: [
         {
-          link: { type: String },
-          type: { type: String, enum: ["video", "image", "pdf"] },
+          multimedia: { type: String },
         },
       ],
     },

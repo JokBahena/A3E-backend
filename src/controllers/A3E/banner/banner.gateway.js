@@ -5,6 +5,9 @@ const { deleteImage } = require("../../../utils/cloudinary/delete-image");
 //Function to save and send data for banner
 const save = async (title, description, imagePath, link) => {
   try {
+    //If missing fields
+    if (!title || !imagePath) return { msg: "Missing fields" };
+
     //If banner exists
     const bannerExist = await Banner.findOne({ title });
     if (bannerExist) return { msg: "Banner already exists" };
@@ -61,6 +64,9 @@ const findById = async (id) => {
 //Function to update banner
 const update = async (id, title, description, imagePath, link) => {
   try {
+    //If missing fields
+    if (!id || !title || !imagePath) return { msg: "Missing fields" };
+
     //Get banner by id
     const banner = await Banner.findById(id);
 

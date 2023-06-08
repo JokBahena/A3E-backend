@@ -3,6 +3,10 @@ const Contact = require("../../../models/A3E/contact");
 //Function to save and send data for contact
 const save = async (type, contact) => {
   try {
+    //If missing fields
+    if (!type || !contact) return { msg: "Missing fields" };
+
+    //If contact exists
     const contactExist = await Contact.findOne({ contact });
     if (contactExist) return { msg: "Contact already exists" };
 

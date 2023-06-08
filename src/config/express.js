@@ -13,6 +13,7 @@ const {
   bannerRouter,
   contactRouter,
   serviceRouter,
+  saleRouter,
 } = require("../controllers/routes");
 
 //Create app express
@@ -30,7 +31,7 @@ app.get("/", (req, res) => {
   res.send("Bienvenido a A3E Ingenieros :)");
 });
 
-//Configurate cors
+//Configurate routes
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/topic", topicRouter);
@@ -40,6 +41,7 @@ app.use("/api/subscription", subscriptionRouter);
 app.use("/api/banner", bannerRouter);
 app.use("/api/contact", contactRouter);
 app.use("/api/service", serviceRouter);
+app.use("/api/sale", saleRouter);
 
 //Export app
 module.exports = {
