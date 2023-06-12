@@ -1,6 +1,6 @@
 const { Response, Router } = require("express");
 const { save, findAll, findById, update } = require("./banner.gateway");
-const { upload } = require("../../../config/multer-config");
+const { uploadFile } = require("../../../config/multer-config");
 
 //Function to save and send data for banner
 const saveAndFlush = async (req, res = Response) => {
@@ -92,10 +92,10 @@ const updateById = async (req, res = Response) => {
 const bannerRouter = Router();
 
 //Define routes
-bannerRouter.post("/create-banner", upload.single("image"), saveAndFlush);
+bannerRouter.post("/create-banner", uploadFile.single("image"), saveAndFlush);
 bannerRouter.get("/getAll-banner", [], getAll);
 bannerRouter.get("/getById-banner/:id", [], getById);
-bannerRouter.put("/updateById-banner/:id", upload.single("image"), updateById);
+bannerRouter.put("/updateById-banner/:id", uploadFile.single("image"), updateById);
 
 //Export routes
 module.exports = { bannerRouter };

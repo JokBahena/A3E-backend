@@ -1,5 +1,5 @@
 const Banner = require("../../../models/A3E/banner");
-const { uploadImage } = require("../../../utils/cloudinary/upload-image");
+const { uploadMultimedia } = require("../../../utils/cloudinary/upload");
 const { deleteImage } = require("../../../utils/cloudinary/delete-image");
 
 //Function to save and send data for banner
@@ -13,7 +13,7 @@ const save = async (title, description, imagePath, link) => {
     if (bannerExist) return { msg: "Banner already exists" };
 
     //Call function to upload image
-    const imageUrl = await uploadImage(imagePath, title, "banners");
+    const imageUrl = await uploadMultimedia(imagePath, title, "banners");
 
     //If image upload fails
     if (!imageUrl) {

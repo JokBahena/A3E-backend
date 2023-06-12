@@ -1,6 +1,6 @@
 const { Response, Router } = require("express");
 const { save, findAll, findById } = require("./topic.gateway");
-const { upload } = require("../../../config/multer-config");
+const { uploadFile } = require("../../../config/multer-config");
 
 //Function to save and send data
 const saveAndFlush = async (req, res = Response) => {
@@ -98,7 +98,7 @@ const topicRouter = Router();
 //Define route
 topicRouter.post(
   "/create-topic",
-  upload.fields([
+  uploadFile.fields([
     {
       name: "multimedias",
     },

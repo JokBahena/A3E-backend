@@ -1,4 +1,4 @@
-const PruebaTiny = require("../models/pruebaTiny");
+const PruebaTiny = require("../../models/pruebaTiny");
 
 //Function to save
 const save = async (content) => {

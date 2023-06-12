@@ -1,7 +1,7 @@
-const moongose = require("mongoose");
+const mongoose = require("mongoose");
 
-const pruebaTinySchema = new moongose.Schema({
+const pruebaTinySchema = new mongoose.Schema({
   content: { type: String },
 });
 
-module.exports = moongose.model("PruebaTiny", pruebaTinySchema);
+module.exports = mongoose.model("PruebaTiny", pruebaTinySchema);
