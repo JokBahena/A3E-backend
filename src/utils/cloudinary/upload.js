@@ -22,14 +22,18 @@ const uploadMultimedia = async (filePath, name, folder) => {
       case "galery":
         let fileExtension = path.extname(filePath);
         let nameWithUnderscore2 = name.replace(/ /g, "_");
+        let nameWithoutExtension = nameWithUnderscore2.replace(
+          fileExtension,
+          ""
+        );
 
         //Upload multimedia
         if (fileExtension === ".mp4") {
           const result = await cloudinary.uploader.upload(filePath, {
             //Upload video to folder
             resource_type: "video",
-            public_id: nameWithUnderscore2,
-            folder: "galery",
+            public_id: nameWithoutExtension,
+            folder: folder,
           });
           return result.secure_url;
         } else if (
@@ -40,12 +44,13 @@ const uploadMultimedia = async (filePath, name, folder) => {
           const result = await cloudinary.uploader.upload(filePath, {
             //Upload image to folder
             resource_type: "image",
-            public_id: nameWithUnderscore2,
-            folder: "galery",
+            public_id: nameWithoutExtension,
+            folder: folder,
           });
           return result.secure_url;
+        } else {
+          return null;
         }
-        break;
 
       default:
         break;

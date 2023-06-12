@@ -8,20 +8,38 @@ const save = async (multimediaPath, multimediaName) => {
     if (!multimediaPath) return { msg: "Missing fields" };
 
     //Call function to upload multimedia
-    const multimediaUrl = await uploadMultimedia(multimediaPath, multimediaName, "galery");
+    const multimediaUrl = await uploadMultimedia(
+      multimediaPath,
+      multimediaName,
+      "galery"
+    );
+
+    //Get type of multimedia
+    const type = multimediaUrl.includes(".mp4") ? "video" : "image";
 
     //If multimedia upload fails
     if (!multimediaUrl) {
       return { msg: "Error uploading multimedia" };
     } else {
       //Create multimedia
-      const multimedia = new Galery({
+      const galery = new Galery({
         multimedia: multimediaUrl,
+        type: type,
       });
 
       //Save multimedia
-      return await multimedia.save();
+      return await galery.save();
     }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//Get all multimedia
+const findAll = async () => {
+  try {
+    //Get all multimedia
+    return await Galery.find();
   } catch (error) {
     console.log(error);
   }
@@ -30,4 +48,5 @@ const save = async (multimediaPath, multimediaName) => {
 //Export functions
 module.exports = {
   save,
+  findAll,
 };

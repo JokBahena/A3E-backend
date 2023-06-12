@@ -1,5 +1,5 @@
 const { Response, Router } = require("express");
-const { save } = require("./galery.gateway");
+const { save, findAll } = require("./galery.gateway");
 const { uploadFile } = require("../../config/multer-config");
 
 //Function to save and send data for galery
@@ -25,11 +25,29 @@ const saveAndFlush = async (req, res = Response) => {
   }
 };
 
+//Function to get all multimedia
+const getAll = async (req, res = Response) => {
+  try {
+    //Call function to get all multimedia
+    const multimedia = await findAll();
+    
+    //If multimedia exists
+    if (!multimedia) return res.status(400).json({ msg: "Multimedia not found" });
+    return res.status(200).json({ multimedia });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      msg: "Error getting multimedia",
+    });
+  }
+};
+
 //Create router
 const galeryRouter = Router();
 
 //Routes
 galeryRouter.post("/save", uploadFile.single("multimedia"), saveAndFlush);
+galeryRouter.get("/getAll-galery", [], getAll);
 
 //Export router
 module.exports = { galeryRouter };

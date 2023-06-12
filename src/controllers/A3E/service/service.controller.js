@@ -125,11 +125,7 @@ const updateById = async (req, res = Response) => {
 const serviceRouter = Router();
 
 //Define routes
-serviceRouter.post(
-  "/create-service",
-  uploadFile.fields([{ name: "files" }, { name: "multimedias" }]),
-  saveAndFlush
-);
+serviceRouter.post("/create-service", [], saveAndFlush);
 serviceRouter.get("/getAll-services", [], getAll);
 serviceRouter.get("/getById-service/:id", [], getById);
 serviceRouter.put(
