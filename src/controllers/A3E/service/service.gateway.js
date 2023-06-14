@@ -27,11 +27,7 @@ const save = async (title, content) => {
 const findAll = async () => {
   try {
     //Find all services
-    return await Service.find()
-      .select("-_id title")
-      .populate("files.file", "-_id file")
-      .populate("info.text", "-_id text")
-      .populate("multimedias.multimedia", "-_id multimedia");
+    return await Service.find();
   } catch (error) {
     console.log(error);
   }
@@ -41,13 +37,7 @@ const findAll = async () => {
 const findById = async (id) => {
   try {
     //Find service by id
-    const service = await Service.findById(id)
-      .select("-_id title")
-      .populate("files.file", "-_id file")
-      .populate("info.text", "-_id text")
-      .populate("multimedias.multimedia", "-_id multimedia");
-
-    //If service exists
+    const service = await Service.findById(id);
     if (!service) return { msg: "Service not found" };
     return service;
   } catch (error) {

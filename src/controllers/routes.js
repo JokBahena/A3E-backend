@@ -15,7 +15,6 @@ const { contactRouter } = require("./A3E/contact/contact.controller");
 const { serviceRouter } = require("./A3E/service/service.controller");
 const { saleRouter } = require("./sale/sale.controller");
 const { galeryRouter } = require("./galery/galery.controller");
-const { tinyRouter } = require("./tinyMCE/tiny.controller");
 
 //Export routes
 module.exports = {
@@ -30,5 +29,4 @@ module.exports = {
   serviceRouter,
   saleRouter,
   galeryRouter,
-  tinyRouter,
 };
