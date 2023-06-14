@@ -15,7 +15,6 @@ const {
   serviceRouter,
   saleRouter,
   galeryRouter,
-  tinyRouter,
 } = require("../controllers/routes");
 
 //Create app express
@@ -45,7 +44,6 @@ app.use("/api/contact", contactRouter);
 app.use("/api/service", serviceRouter);
 app.use("/api/sale", saleRouter);
 app.use("/api/galery", galeryRouter);
-app.use("/api/tiny", tinyRouter);
 
 //Export app
 module.exports = {
