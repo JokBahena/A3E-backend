@@ -39,7 +39,7 @@ const save = async (title, description, imagePath, link) => {
 const findAll = async () => {
   try {
     //Get all banners
-    return await Banner.find().select("-_id title image");
+    return await Banner.find();
   } catch (error) {
     console.log(error);
   }
