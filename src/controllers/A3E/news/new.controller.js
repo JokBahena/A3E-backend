@@ -2,9 +2,9 @@ const {save, findAll, findById, update, deleteById} = require ("./new.gateway")
 const { Respone, Router } = require("express");
 const saveAndFlush = async (req, res = Response)=>{
     try{
-        const {title, content} = req.body
+        const {title, type, content} = req.body
 
-        const dataNew = await save(title, content)
+        const dataNew = await save(title, type,content)
 
         if (dataNew.msg) return res.status(400).json({
             msg:dataNew.msg

@@ -1,8 +1,10 @@
 const New = require('../../../models/A3E/new')
 
-const save = async(title, content) =>{
+const save = async(title, type,content) =>{
     try{
         if(!title) return {msg: 'Title is required'}
+
+        if(!type) return {msg: 'Type is required'}
 
         const newExist = await New.findOne({
             title
@@ -11,6 +13,7 @@ const save = async(title, content) =>{
 
         const dataNew = new New({
             title:title,
+            type:type,
             content:content
         })
 
