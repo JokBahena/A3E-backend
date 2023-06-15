@@ -45,60 +45,40 @@ const findById = async (id) => {
   }
 };
 
-const update = async (id, title, files, info, multimedias) => {
+const update = async (id, title, content) => {
   try {
-    let urls = [];
-
-    //If missing fields
+    // If missing fields
     if (!title) return { msg: "Title is required" };
 
-    //If service exists
+    // If service exists
     const service = await Service.findById(id);
     if (!service) return { msg: "Service not found" };
 
-    //Check if title is already in use
-    const serviceExist = await Service.findOne({ title });
-    if (serviceExist) return { msg: "Service already exists" };
-
-    //Create array with files and multimedias
-    urls = [
-      { type: "files", ...files },
-      { type: "multimedias", ...multimedias },
-    ];
-
-    //Delete files and multimedias
-    const result = await deleteFolder(
-      service.title,
-      service.files,
-      service.multimedias
-    );
-    if (!result) return { msg: "Error deleting files or multimedias" };
-
-    //Call function to upload image
-    const { filesUrl, multimediasUrl } = await uploadImage(
-      urls,
-      title,
-      "services"
-    );
-
-    //If image upload fails
-    if (!filesUrl || !multimediasUrl) {
-      return { msg: "Error uploading files or multimedias" };
-    } else {
-      //Create arrays
-      const filesArray = filesUrl.map((fileUrl) => ({ file: fileUrl }));
-      const multimediasArray = multimediasUrl.map((multimediaUrl) => ({
-        multimedia: multimediaUrl,
-      }));
-      //Create service
-      service.title = title;
-      service.files = filesArray;
-      service.info = info;
-      service.multimedias = multimediasArray;
-
-      //Save service
-      return await service.save();
+    // Check if title is already in use
+    if (title !== service.title) {
+      const serviceExist = await Service.findOne({ title });
+      if (serviceExist) return { msg: "Service already exists" };
     }
+
+    // Update service
+    service.title = title;
+    service.content = content;
+
+    // Save service
+    return await service.save();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteById = async (id) => {
+  try {
+    // Find service by id
+    const service = await Service.findById(id);
+    if (!service) return { msg: "Service not found" };
+
+    // Delete service
+    return await Service.findByIdAndDelete(id);
   } catch (error) {
     console.log(error);
   }
@@ -110,4 +90,5 @@ module.exports = {
   findAll,
   findById,
   update,
+  deleteById,
 };
