@@ -40,10 +40,9 @@ const getAll = async (req, res = Response) =>{
 const getById = async (req, res=Response)=>{
     try{
         const {id} = req.params;
-
         const dataNew = await findById(id);
 
-        if(service.msg) return res.status(400).json({
+        if(dataNew.msg) return res.status(400).json({
             msg: dataNew.msg
         })
 
@@ -100,10 +99,10 @@ const deleteNew = async(req, res = Response)=>{
 
 const newRouter = Router();
 
-newRouter.post("/create-new",[], saveAndFlush)
+newRouter.post("/create-new",[], saveAndFlush);
 newRouter.get("/getAll-news",[], getAll);
 newRouter.get("/getById-new/:id",[],getById);
 newRouter.put("/updateById-new/:id",[], updateById);
-newRouter.delete("/deleteById-new/:id",[],deleteNew)
+newRouter.delete("/deleteById-new/:id",[],deleteNew);
 
 module.exports = {newRouter}
