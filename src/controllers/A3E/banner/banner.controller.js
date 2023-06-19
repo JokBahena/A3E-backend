@@ -93,7 +93,7 @@ const bannerRouter = Router();
 
 //Define routes
 bannerRouter.post("/create-banner", uploadFile.single("image"), saveAndFlush);
-bannerRouter.get("/getAll-banner", [], getAll);
+bannerRouter.get("/getAll-banners", [], getAll);
 bannerRouter.get("/getById-banner/:id", [], getById);
 bannerRouter.put("/updateById-banner/:id", uploadFile.single("image"), updateById);
 
