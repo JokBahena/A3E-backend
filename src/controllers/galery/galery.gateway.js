@@ -1,6 +1,6 @@
 const Galery = require("../../models/galery");
 const { uploadMultimedia } = require("../../utils/cloudinary/upload");
-const { deleteMultimedia } = require("../../utils/cloudinary/delete");
+const { deleteMultimedia } = require("../../utils/cloudinary/delete-multimedia");
 
 //Save multimedia
 const save = async (multimediaPath, multimediaName) => {

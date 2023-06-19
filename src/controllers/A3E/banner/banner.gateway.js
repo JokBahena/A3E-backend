@@ -99,10 +99,57 @@ const update = async (id, title, description, imagePath, link) => {
   }
 };
 
+//Function to update status banner
+const updateStatus = async (id) => {
+  try {
+    //If missing fields
+    if (!id) return { msg: "Missing fields" };
+
+    //Get banner by id
+    const banner = await Banner.findById(id);
+
+    //If banner no exists
+    if (!banner) return { msg: "Banner not found" };
+
+    //Update banner
+    banner.status = !banner.status;
+
+    //Save banner
+    return await banner.save();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//Function to delete banner
+const deleteBanner = async (id) => {
+  try {
+    //If missing fields
+    if (!id) return { msg: "Missing fields" };
+
+    //Get banner by id
+    const banner = await Banner.findById(id);
+    if (!banner) return { msg: "Banner not found" };
+
+    //delete image
+    const result = await deleteImage(banner.title);
+
+    //If image delete fails
+    if (!result) return { msg: "Error deleting image" };
+
+    //Delete banner
+    return await Banner.findByIdAndDelete(id);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 //Export functions
 module.exports = {
   save,
   findAll,
   findById,
   update,
+  updateStatus,
+  deleteBanner,
 };

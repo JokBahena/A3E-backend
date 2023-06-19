@@ -2,7 +2,7 @@ const { cloudinary } = require("../../config/cloudinary-config");
 const path = require("path");
 
 //Function to delete image
-const deleteMultimedia = async (link, folder) => {
+const deleteMultimedia = async (link) => {
   try {
     const filename = link.substring(link.lastIndexOf("/") + 1);
     const type = path.extname(filename);

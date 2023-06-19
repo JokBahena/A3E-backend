@@ -1,5 +1,12 @@
 const { Response, Router } = require("express");
-const { save, findAll, findById, update } = require("./banner.gateway");
+const {
+  save,
+  findAll,
+  findById,
+  update,
+  updateStatus,
+  deleteBanner,
+} = require("./banner.gateway");
 const { uploadFile } = require("../../../config/multer-config");
 
 //Function to save and send data for banner
@@ -88,6 +95,47 @@ const updateById = async (req, res = Response) => {
   }
 };
 
+//Function to update banner status
+const updateStatusById = async (req, res = Response) => {
+  try {
+    //Extract id from params
+    const { id } = req.params;
+
+    //Call function to update banner status
+    const banner = await updateStatus(id);
+
+    //If banner exists
+    if (banner.msg) return res.status(400).json({ msg: banner.msg });
+    return res.status(200).json({ msg: "Banner status updated" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      msg: "Error updating banner status",
+    });
+  }
+};
+
+//Function to delete banner
+const deleteById = async (req, res = Response) => {
+  try {
+    //Extract id from params
+    const { id } = req.params;
+
+    //Call function to delete banner
+    const banner = await deleteBanner(id);
+
+    //If banner exists
+    if (banner.msg) return res.status(400).json({ msg: banner.msg });
+
+    return res.status(200).json({ msg: "Banner deleted" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      msg: "Error deleting banner",
+    });
+  }
+};
+
 //Route to save data
 const bannerRouter = Router();
 
@@ -95,7 +143,13 @@ const bannerRouter = Router();
 bannerRouter.post("/create-banner", uploadFile.single("image"), saveAndFlush);
 bannerRouter.get("/getAll-banners", [], getAll);
 bannerRouter.get("/getById-banner/:id", [], getById);
-bannerRouter.put("/updateById-banner/:id", uploadFile.single("image"), updateById);
+bannerRouter.put(
+  "/updateById-banner/:id",
+  uploadFile.single("image"),
+  updateById
+);
+bannerRouter.patch("/updateStatus-banner/:id", [], updateStatusById);
+bannerRouter.delete("/deleteById-banner/:id", [], deleteById);
 
 //Export routes
 module.exports = { bannerRouter };
