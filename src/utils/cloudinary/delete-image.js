@@ -1,11 +1,16 @@
 const { cloudinary } = require("../../config/cloudinary-config");
+const path = require("path");
 
 //Function to delete image
-const deleteImage = async (nameImg) => {
+const deleteImage = async (link) => {
   try {
-    const nameWithUnderscore = nameImg.replace(/ /g, "_");
+    //Get filename, type and name
+    const filename = link.substring(link.lastIndexOf("/") + 1);
+    const type = path.extname(filename);
+    const name = filename.replace(type, "");
+
     //Delete image
-    const result = await cloudinary.uploader.destroy(`banners/${nameWithUnderscore}`);
+    const result = await cloudinary.uploader.destroy(`banners/${name}`);
     return result;
   } catch (error) {
     console.log(error);

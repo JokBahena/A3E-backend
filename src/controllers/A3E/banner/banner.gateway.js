@@ -65,26 +65,39 @@ const findById = async (id) => {
 const update = async (id, title, description, imagePath, link) => {
   try {
     //If missing fields
-    if (!id || !title || !imagePath) return { msg: "Missing fields" };
+    if (!id || !title) return { msg: "Missing fields" };
 
     //Get banner by id
     const banner = await Banner.findById(id);
-
-    //If banner no exists
     if (!banner) return { msg: "Banner not found" };
 
-    //If title is changed
-    if (banner.title !== title) {
-      await deleteImage(banner.title);
+    //Check if title is already in use
+    if (title !== banner.title) {
+      const bannerExist = await Banner.findOne({ title });
+      if (bannerExist) return { msg: "Banner already exists" };
     }
 
-    //Call function to upload image
-    const imageUrl = await uploadImage(imagePath, title, "banners");
+    if (!imagePath) {
+      //Update banner
+      banner.title = title;
+      banner.description = description;
+      banner.link = link;
 
-    //If image upload fails
-    if (!imageUrl) {
-      return { msg: "Error uploading image" };
-    } else {
+      //Save banner
+      return await banner.save();
+    } else if (imagePath) {
+      //Delete image
+      const result = await deleteImage(banner.image);
+
+      //If image delete fails
+      if (!result) return { msg: "Error deleting image" };
+
+      //Call function to upload image
+      const imageUrl = await uploadMultimedia(imagePath, title, "banners");
+
+      //If image upload fails
+      if (!imageUrl) return { msg: "Error uploading image" };
+
       //Update banner
       banner.title = title;
       banner.description = description;

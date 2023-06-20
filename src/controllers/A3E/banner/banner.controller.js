@@ -79,7 +79,7 @@ const updateById = async (req, res = Response) => {
     const { title, description, link } = req.body;
 
     // Get the file path
-    const imagePath = req.file.path;
+    const imagePath = req.file ? req.file.path : null;
 
     //Call function to update banner
     const banner = await update(id, title, description, imagePath, link);
