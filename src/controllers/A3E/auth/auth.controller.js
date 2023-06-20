@@ -55,20 +55,24 @@ const lostPassword = async (req, res = Response) => {
 const renewToken = async (req, res = Response) => {
   try {
     //Extract token from header
-    const token = req.headers.authorization.split(" ")[1];
-
-    //Call function to renew token
+    const token = req.body.headers.authorization.split(" ")[1];
     const newToken = await renew(token);
 
-    //Send new token
-    res.status(200).json({ msg: "Token renewed", token: newToken.token });
+    if (newToken.msg === "Invalid token") {
+      return res.status(401).json({ msg: newToken.msg });
+    }
+
+    return res
+      .status(200)
+      .json({ msg: "Token renewed", token: newToken.token });
   } catch (error) {
     console.log(error);
     res.status(400).json({
-      msg: "Error signing in",
+      msg: "Error renew token",
     });
   }
 };
+
 //Function to check if token is expired
 const isTokenExpired = async (req, res = Response) => {
   try {
