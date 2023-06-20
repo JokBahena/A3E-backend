@@ -15,7 +15,8 @@ const {
   serviceRouter,
   saleRouter,
   galeryRouter,
-  newRouter
+  newRouter,
+  clientRouter,
 } = require("../controllers/routes");
 
 //Create app express
@@ -46,6 +47,7 @@ app.use("/api/service", serviceRouter);
 app.use("/api/sale", saleRouter);
 app.use("/api/galery", galeryRouter);
 app.use("/api/new", newRouter);
+app.use("/api/client", clientRouter);
 //Export app
 module.exports = {
   app,

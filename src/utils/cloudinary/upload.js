@@ -6,6 +6,27 @@ const uploadMultimedia = async (filePath, name, folder) => {
   try {
     //Which folder
     switch (folder) {
+      case "clients":
+        let nameWithUnderscore3 = name.replace(/ /g, "_");
+        let nameWithoutSigns2 = nameWithUnderscore3.replace(/[!¡?¿,.-]/g, "x");
+        let stringWithoutAccents2 = nameWithoutSigns2
+          .replace(/[áÁ]/g, "a")
+          .replace(/[éÉ]/g, "e")
+          .replace(/[íÍ]/g, "i")
+          .replace(/[óÓ]/g, "o")
+          .replace(/[úÚ]/g, "u");
+
+        //Upload image
+        const result2 = await cloudinary.uploader.upload(filePath, {
+          //Upload image to folder
+          resource_type: "image",
+          public_id: stringWithoutAccents2,
+          folder: folder,
+        });
+
+        //Return url
+        return result2.secure_url;
+
       case "banners":
         let nameWithUnderscore = name.replace(/ /g, "_");
         let nameWithoutSigns = nameWithUnderscore.replace(/[!¡?¿,.-]/g, "x");
