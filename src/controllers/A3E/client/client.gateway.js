@@ -1,5 +1,6 @@
 const Client = require("../../../models/A3E/client");
 const { uploadMultimedia } = require("../../../utils/cloudinary/upload");
+const { deleteImage } = require("../../../utils/cloudinary/delete-image");
 
 //Function to save and send data for client
 const save = async (name, imagePath) => {
@@ -42,8 +43,32 @@ const findAll = async () => {
   }
 };
 
+const deleteClient = async (id) => {
+  try {
+    //Get client by id
+    const clientExist = await Client.findById(id);
+
+    //If client exists
+    if (!clientExist) return { msg: "Client not found" };
+
+    //Call function to delete image
+    const result = await deleteImage(clientExist.image, "clients");
+
+    //If image delete fails
+    if (!result) {
+      return { msg: "Error deleting image" };
+    } else {
+      //Delete client
+      return await Client.findByIdAndDelete(id);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 //Export functions
 module.exports = {
   save,
   findAll,
+  deleteClient,
 };

@@ -145,7 +145,7 @@ const deleteBanner = async (id) => {
     if (!banner) return { msg: "Banner not found" };
 
     //delete image
-    const result = await deleteImage(banner.image);
+    const result = await deleteImage(banner.image, "banners");
 
     //If image delete fails
     if (!result) return { msg: "Error deleting image" };

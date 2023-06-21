@@ -1,5 +1,5 @@
 const { Response, Router } = require("express");
-const { save, findAll } = require("./client.gateway");
+const { save, findAll, deleteClient } = require("./client.gateway");
 const { uploadFile } = require("../../../config/multer-config");
 
 //Function to save and send data for client
@@ -42,12 +42,32 @@ const getAll = async (req, res = Response) => {
   }
 };
 
+const deleteClientById = async (req, res = Response) => {
+  try {
+    //Extract id from params
+    const { id } = req.params;
+
+    //Call function to delete client
+    const client = await deleteClient(id);
+
+    //If client exists
+    if (client.msg) return res.status(400).json({ msg: client.msg });
+    return res.status(200).json({ msg: "Client deleted" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      msg: "Error deleting client",
+    });
+  }
+};
+
 //Router to save client
 const clientRouter = Router();
 
 //Define routes
 clientRouter.post("/create-client", uploadFile.single("image"), saveAndFlush);
 clientRouter.get("/getAll-clients", [], getAll);
+clientRouter.delete("/deleteById-client/:id", deleteClientById);
 
 //Export router
 module.exports = { clientRouter };
