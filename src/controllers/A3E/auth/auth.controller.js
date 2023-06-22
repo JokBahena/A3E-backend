@@ -12,7 +12,13 @@ const signin = async (req, res = Response) => {
 
     //Call function to login
     const token = await login(email, password);
-    res.status(200).json(token);
+
+    //Validate token
+    if (token.msg) {
+      return res.status(400).json({ msg: token.msg });
+    }
+
+    return res.status(200).json({ msg: "User logged", token });
   } catch (error) {
     console.log(error);
     res.status(400).json({

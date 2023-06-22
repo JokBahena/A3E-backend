@@ -1,5 +1,5 @@
 const { Response, Router } = require("express");
-const { save, findAll, findById } = require("./contact.gateway");
+const { save, findAll, findById, deleteById } = require("./contact.gateway");
 
 //Function to save and send data for contact
 const saveAndFlush = async (req, res = Response) => {
@@ -58,6 +58,26 @@ const getById = async (req, res = Response) => {
   }
 };
 
+//Function to delete contact by id
+const deleteByIdContact = async (req, res = Response) => {
+  try {
+    //Extract id from params
+    const { id } = req.params;
+
+    //Call function to delete contact by id
+    const contact = await deleteById(id);
+
+    //If contact exists
+    if (contact.msg) return res.status(400).json({ msg: contact.msg });
+    return res.status(200).json({ msg: "Contact deleted" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      msg: "Error deleting contact",
+    });
+  }
+};
+
 //Router data
 const contactRouter = Router();
 
@@ -65,6 +85,7 @@ const contactRouter = Router();
 contactRouter.post("/create-contact", [], saveAndFlush);
 contactRouter.get("/getAll-contacts", [], getAll);
 contactRouter.get("/getById-contact/:id", [], getById);
+contactRouter.delete("/deleteById-contact/:id", [], deleteByIdContact);
 
 //Export router
 module.exports = { contactRouter };
