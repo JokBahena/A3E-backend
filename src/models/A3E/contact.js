@@ -2,11 +2,7 @@ const moongose = require("mongoose");
 
 //Create schema
 const contactSchema = new moongose.Schema({
-  type: {
-    type: String,
-    enum: ["email", "phone", "whatsapp", "facebook", "linkedin", "other"],
-    required: true,
-  },
+  type: { type: String, required: true },
   contact: { type: String, required: true },
 });
 
