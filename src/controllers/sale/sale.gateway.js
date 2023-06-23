@@ -38,7 +38,18 @@ const save = async (
   }
 };
 
+//Function to get all sales
+const findAll = async () => {
+  try {
+    //Get all sales
+    return await Sale.find();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 //Export functions
 module.exports = {
   save,
+  findAll,
 };

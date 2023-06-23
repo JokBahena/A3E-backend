@@ -10,10 +10,9 @@ const saveAndFlush = async (req, res = Response) => {
       phone,
       age,
       institution,
-      typePeriod,
+      period,
       typePractice,
       degree,
-      source,
       info,
     } = req.body;
 
@@ -24,10 +23,9 @@ const saveAndFlush = async (req, res = Response) => {
       phone,
       age,
       institution,
-      typePeriod,
+      period,
       typePractice,
       degree,
-      source,
       info
     );
 

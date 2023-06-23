@@ -7,10 +7,9 @@ const save = async (
   phone,
   age,
   institution,
-  typePeriod,
+  period,
   typePractice,
   degree,
-  source,
   info
 ) => {
   try {
@@ -21,10 +20,9 @@ const save = async (
       !phone ||
       !age ||
       !institution ||
-      !typePeriod ||
+      !period ||
       !typePractice ||
-      !degree ||
-      !source
+      !degree
     )
       return { msg: "Missing fields" };
 
@@ -39,10 +37,9 @@ const save = async (
       phone: phone,
       age: age,
       institution: institution,
-      typePeriod: typePeriod,
+      period: period,
       typePractice: typePractice,
       degree: degree,
-      source: source,
       info: info,
     });
 
@@ -56,7 +53,7 @@ const save = async (
 //Function to find all intern
 const findAll = async () => {
   try {
-    return await Intern.find().select("-_id fullName email phone");
+    return await Intern.find();
   } catch (error) {
     console.log(error);
   }
