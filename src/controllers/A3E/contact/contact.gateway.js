@@ -43,6 +43,27 @@ const findById = async (id) => {
   }
 };
 
+//Function to update contact by id
+const update = async (id, type, contact) => {
+  try {
+    //Get contact by id
+    const contactx = await Contact.findById(id);
+
+    //If contact exists
+    if (!contactx) return { msg: "Contact not found" };
+
+    //Update contact
+    contactx.type = type;
+    contactx.contact = contact;
+
+    //Save contact
+    return await contactx.save();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//Function to delete contact by id
 const deleteById = async (id) => {
   try {
     //Get contact by id
@@ -57,4 +78,4 @@ const deleteById = async (id) => {
 };
 
 //Export functions
-module.exports = { save, findAll, findById, deleteById };
+module.exports = { save, findAll, findById, update, deleteById };
