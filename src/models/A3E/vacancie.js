@@ -2,10 +2,10 @@ const moongose = require("mongoose");
 
 const vacancieSchema = new moongose.Schema({
   fullName: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
   phone: { type: String },
+  email: { type: String, required: true, unique: true },
   age: { type: Number, required: true },
-  address: { type: String, required: true },
+  residence: { type: String, required: true },
   education: { type: String, required: true },
   position: { type: String, required: true },
   source: { type: String, required: true },
