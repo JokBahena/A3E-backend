@@ -20,7 +20,7 @@ const saveAndFlush = async (req, res = Response) => {
     );
 
     //If sale exists
-    if (sale.msg) return res.status(400).json({ msg: sale.msg });
+    // if (sale.msg) return res.status(400).json({ msg: sale.msg });
     return res.status(200).json({ msg: "Sale saved" });
   } catch (error) {
     console.log(error);

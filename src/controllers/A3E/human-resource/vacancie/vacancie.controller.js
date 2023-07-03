@@ -1,5 +1,6 @@
 const { Response, Router } = require("express");
 const { save, findAll, findById } = require("./vacancie.gateway");
+const { uploadFile } = require("../../../../config/multer-config");
 
 //Function to save and send data
 const saveAndFlush = async (req, res = Response) => {
@@ -7,27 +8,29 @@ const saveAndFlush = async (req, res = Response) => {
     //Extract data from body
     const {
       fullName,
-      email,
       phone,
+      email,
       age,
-      address,
+      residence,
       education,
       position,
       source,
-      curriculum,
     } = req.body;
+
+    // Get the file path
+    const curriculumPath = req.file.path;
 
     //Call function to save data
     const vacancie = await save(
       fullName,
-      email,
       phone,
+      email,
       age,
-      address,
+      residence,
       education,
       position,
       source,
-      curriculum
+      curriculumPath
     );
 
     //If user exists
@@ -81,7 +84,7 @@ const getById = async (req, res = Response) => {
 const vacancieRouter = Router();
 
 //Define route
-vacancieRouter.post("/create-vacancie", [], saveAndFlush);
+vacancieRouter.post("/create-vacancie", uploadFile.single("curriculum"), saveAndFlush);
 vacancieRouter.get("/getAll-vacancie", [], getAll);
 vacancieRouter.get("/getById-vacancie/:id", [], getById);
 

@@ -81,6 +81,25 @@ const uploadMultimedia = async (filePath, name, folder) => {
           return null;
         }
 
+      case "curriculum":
+        let nameWithUnderscore4 = name.replace(/ /g, "_");
+        let stringWithoutAccents3 = nameWithUnderscore4
+          .replace(/[áÁ]/g, "a")
+          .replace(/[éÉ]/g, "e")
+          .replace(/[íÍ]/g, "i")
+          .replace(/[óÓ]/g, "o")
+          .replace(/[úÚ]/g, "u");
+
+        //Upload image
+        const result3 = await cloudinary.uploader.upload(filePath, {
+          //Upload image to folder
+          public_id: stringWithoutAccents3,
+          folder: folder,
+        });
+
+        //Return url
+        return result3.secure_url;
+
       default:
         break;
     }

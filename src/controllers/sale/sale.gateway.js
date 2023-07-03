@@ -16,8 +16,8 @@ const save = async (
       return { msg: "Missing fields" };
 
     //If sale exists
-    const saleExist = await Sale.findOne({ email });
-    if (saleExist) return { msg: "Sale already exists" };
+    // const saleExist = await Sale.findOne({ email });
+    // if (saleExist) return { msg: "Sale already exists" };
 
     //Create sale
     const sale = new Sale({

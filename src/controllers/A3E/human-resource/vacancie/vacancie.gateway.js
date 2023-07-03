@@ -1,51 +1,67 @@
 const Vacancie = require("../../../../models/A3E/vacancie");
+const { uploadMultimedia } = require("../../../../utils/cloudinary/upload");
 
 //Function to save and send data for vacancie
 const save = async (
   fullName,
-  email,
   phone,
+  email,
   age,
-  address,
+  residence,
   education,
   position,
   source,
-  curriculum
+  curriculumPath
 ) => {
   try {
     //Validate fields
     if (
       !fullName ||
       !email ||
-      !phone ||
       !age ||
-      !address ||
+      !residence ||
       !education ||
       !position ||
       !source ||
-      !curriculum
+      !curriculumPath
     )
       return { msg: "Missing fields" };
 
-    //If user exists
-    const vacancieExist = await Vacancie.findOne({ email });
-    if (vacancieExist) return { msg: "Your request is already registered" };
+    //If user exists (email or fullName)
+    const vacancieExists = await Vacancie.findOne({
+      $or: [{ email: email }, { fullName: fullName }],
+    });
+    if (vacancieExists) return { msg: "Your request is already registered" };
+
+    // const vacancieExist = await Vacancie.findOne({ email, fullName });
+    // if (vacancieExist) return { msg: "Your request is already registered" };
+
+    //Call function to upload file
+    const fileUrl = await uploadMultimedia(
+      curriculumPath,
+      fullName,
+      "curriculum"
+    );
 
     //Create vacancie
-    const vacancie = new Vacancie({
-      fullName: fullName,
-      email: email,
-      phone: phone,
-      age: age,
-      address: address,
-      education: education,
-      position: position,
-      source: source,
-      curriculum: curriculum,
-    });
+    if (!fileUrl) {
+      return { msg: "Error uploading file" };
+    } else {
+      const vacancie = new Vacancie({
+        fullName: fullName,
+        phone: phone,
+        email: email,
+        age: age,
+        residence: residence,
+        education: education,
+        position: position,
+        source: source,
+        curriculum: fileUrl,
+      });
 
-    //Save vacancie
-    return await vacancie.save();
+      //Save vacancie
+      return await vacancie.save();
+    }
   } catch (error) {
     console.log(error);
   }
