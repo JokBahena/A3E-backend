@@ -6,27 +6,27 @@ const saveAndFlush = async (req, res = Response) => {
     //Extract data from body
     const {
       fullName,
-      email,
       phone,
+      email,
       age,
       institution,
-      period,
       typePractice,
       degree,
+      period,
       info,
     } = req.body;
 
     //Call function to save data
     const intern = await save(
       fullName,
-      email,
       phone,
+      email,
       age,
       institution,
-      period,
       typePractice,
       degree,
-      info
+      period,
+      info,
     );
 
     //If user exists

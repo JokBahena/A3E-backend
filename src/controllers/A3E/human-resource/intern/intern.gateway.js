@@ -3,13 +3,13 @@ const Intern = require("../../../../models/A3E/intern");
 //Function to save and send data for intern
 const save = async (
   fullName,
-  email,
   phone,
+  email,
   age,
   institution,
-  period,
   typePractice,
   degree,
+  period,
   info
 ) => {
   try {
@@ -17,29 +17,32 @@ const save = async (
     if (
       !fullName ||
       !email ||
-      !phone ||
       !age ||
       !institution ||
-      !period ||
       !typePractice ||
-      !degree
+      !degree ||
+      !period
     )
       return { msg: "Missing fields" };
 
     //If user exists
-    const internExist = await Intern.findOne({ email });
+    const internExist = await Intern.findOne({
+      $or: [{ fullName: fullName }, { email: email }],
+    });
     if (internExist) return { msg: "Your request is already registered" };
+    // const internExist = await Intern.findOne({ email });
+    // if (internExist) return { msg: "Your request is already registered" };
 
     //Create intern
     const intern = new Intern({
       fullName: fullName,
-      email: email,
       phone: phone,
+      email: email,
       age: age,
       institution: institution,
-      period: period,
       typePractice: typePractice,
       degree: degree,
+      period: period,
       info: info,
     });
 
