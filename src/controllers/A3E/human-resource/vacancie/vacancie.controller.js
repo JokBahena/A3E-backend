@@ -48,12 +48,12 @@ const saveAndFlush = async (req, res = Response) => {
 const getAll = async (req, res = Response) => {
   try {
     //Call function to find all vacancie
-    const vacancie = await findAll();
+    const vacancies = await findAll();
 
     //If user exists
-    if (!vacancie) return res.status(400).json({ msg: "Vacancies not found" });
+    if (!vacancies) return res.status(400).json({ msg: "Vacancies not found" });
 
-    return res.status(200).json({ vacancie });
+    return res.status(200).json({ vacancies });
   } catch (error) {
     console.log(error);
     res.status(400).json({
@@ -85,7 +85,7 @@ const vacancieRouter = Router();
 
 //Define route
 vacancieRouter.post("/create-vacancie", uploadFile.single("curriculum"), saveAndFlush);
-vacancieRouter.get("/getAll-vacancie", [], getAll);
+vacancieRouter.get("/getAll-vacancies", [], getAll);
 vacancieRouter.get("/getById-vacancie/:id", [], getById);
 
 //Export route

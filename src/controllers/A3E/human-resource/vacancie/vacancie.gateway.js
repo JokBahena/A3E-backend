@@ -70,7 +70,7 @@ const save = async (
 //Function to find all vacancie
 const findAll = async () => {
   try {
-    return await Vacancie.find().select("-_id fullName email phone");
+    return await Vacancie.find();
   } catch (error) {
     console.log(error);
   }
