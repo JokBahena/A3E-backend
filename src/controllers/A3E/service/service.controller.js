@@ -5,10 +5,10 @@ const { save, findAll, findById, update, deleteById } = require("./service.gatew
 const saveAndFlush = async (req, res = Response) => {
   try {
     //Extract data from body
-    const { title, content } = req.body;
+    const { title, subtitle, summary, content } = req.body;
 
     //Call function to save data
-    const service = await save(title, content);
+    const service = await save(title, subtitle, summary, content);
 
     //If service exists
     if (service.msg) return res.status(400).json({ msg: service.msg });
@@ -65,10 +65,10 @@ const updateById = async (req, res = Response) => {
     const { id } = req.params;
 
     //Extract data from body
-    const { title, content } = req.body;
+    const { title, subtitle, summary, content } = req.body;
 
     //Call function to update service
-    const service = await update(id, title, content);
+    const service = await update(id, title, subtitle, summary, content);
 
     //If service exists
     if (service.msg) return res.status(400).json({ msg: service.msg });

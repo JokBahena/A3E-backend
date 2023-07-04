@@ -1,10 +1,10 @@
 const Service = require("../../../models/A3E/service");
 
 //Function to save and send data for service
-const save = async (title, content) => {
+const save = async (title, subtitle, summary, content) => {
   try {
     //If missing fields
-    if (!title) return { msg: "Title is required" };
+    if (!title || !summary || !content) return { msg: "Title is required" };
 
     //If service exists
     const serviceExist = await Service.findOne({ title });
@@ -13,6 +13,8 @@ const save = async (title, content) => {
     //Create service
     const service = new Service({
       title: title,
+      subtitle: subtitle,
+      summary: summary,
       content: content,
     });
 
@@ -45,10 +47,10 @@ const findById = async (id) => {
   }
 };
 
-const update = async (id, title, content) => {
+const update = async (id, title, subtitle, summary, content) => {
   try {
     // If missing fields
-    if (!title) return { msg: "Title is required" };
+    if (!title || !summary || !content) return { msg: "Title is required" };
 
     // If service exists
     const service = await Service.findById(id);
@@ -62,6 +64,8 @@ const update = async (id, title, content) => {
 
     // Update service
     service.title = title;
+    service.subtitle = subtitle;
+    service.summary = summary;
     service.content = content;
 
     // Save service
