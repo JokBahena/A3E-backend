@@ -1,5 +1,11 @@
 const { Response, Router } = require("express");
-const { save, findAll, findById } = require("./vacancie.gateway");
+const {
+  save,
+  findAll,
+  findById,
+  changeStatus,
+  deleteById,
+} = require("./vacancie.gateway");
 const { uploadFile } = require("../../../../config/multer-config");
 
 //Function to save and send data
@@ -80,13 +86,56 @@ const getById = async (req, res = Response) => {
   }
 };
 
+//Function to change vacancie status
+const changeVacancieStatus = async (req, res = Response) => {
+  try {
+    const { id } = req.params;
+
+    //Call function to change vacancie status
+    const vacancie = await changeStatus(id);
+
+    //If user exists
+    if (vacancie.msg) return res.status(400).json({ msg: vacancie.msg });
+    return res.status(200).json({ msg: "Vacancie status changed" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      msg: "Error changing vacancie status",
+    });
+  }
+};
+
+const deleteVacancie = async (req, res = Response) => {
+  try {
+    const { id } = req.params;
+
+    //Call function to change vacancie status
+    const vacancie = await deleteById(id);
+    
+    //If user exists
+    if (vacancie.msg) return res.status(400).json({ msg: vacancie.msg });
+    return res.status(200).json({ msg: "Vacancie deleted" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      msg: "Error deleting vacancie",
+    });
+  }
+};
+
 //Route to save data
 const vacancieRouter = Router();
 
 //Define route
-vacancieRouter.post("/create-vacancie", uploadFile.single("curriculum"), saveAndFlush);
+vacancieRouter.post(
+  "/create-vacancie",
+  uploadFile.single("curriculum"),
+  saveAndFlush
+);
 vacancieRouter.get("/getAll-vacancies", [], getAll);
 vacancieRouter.get("/getById-vacancie/:id", [], getById);
+vacancieRouter.patch("/changeStatus-vacancie/:id", [], changeVacancieStatus);
+vacancieRouter.delete("/deleteById-vacancie/:id", [], deleteVacancie);
 
 //Export route
 module.exports = { vacancieRouter };

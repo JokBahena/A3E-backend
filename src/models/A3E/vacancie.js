@@ -10,6 +10,7 @@ const vacancieSchema = new moongose.Schema({
   position: { type: String, required: true },
   source: { type: String, required: true },
   curriculum: { type: String, required: true },
+  status: { type: Boolean, default: false },
 });
 
 module.exports = moongose.model("Vacancie", vacancieSchema);

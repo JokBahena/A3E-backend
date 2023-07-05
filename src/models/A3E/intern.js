@@ -10,6 +10,7 @@ const internSchema = new moongose.Schema({
   degree: { type: String, required: true },
   period: { type: String, required: true },
   info: { type: String },
+  status: { type: Boolean, default: false },
 });
 
 module.exports = moongose.model("Intern", internSchema);

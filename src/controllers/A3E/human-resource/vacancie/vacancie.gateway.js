@@ -1,5 +1,6 @@
 const Vacancie = require("../../../../models/A3E/vacancie");
 const { uploadMultimedia } = require("../../../../utils/cloudinary/upload");
+const { deleteImage } = require("../../../../utils/cloudinary/delete");
 
 //Function to save and send data for vacancie
 const save = async (
@@ -93,5 +94,46 @@ const findById = async (id) => {
   }
 };
 
+//Function to change vacancie status
+const changeStatus = async (id) => {
+  try {
+    //Find vacancie by id
+    const vacancie = await Vacancie.findById(id);
+
+    //If vacancie exists
+    if (!vacancie) return { msg: "Vacancie not found" };
+
+    //Change status
+    vacancie.status = !vacancie.status;
+
+    //Save vacancie
+    return await vacancie.save();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteById = async (id) => {
+  try {
+    //Validate fields
+    if (!id) return { msg: "Missing fields" };
+
+    //Find vacancie by id
+    const vacancie = await Vacancie.findById(id);
+    if (!vacancie) return { msg: "Vacancie not found" };
+
+    //Delete file
+    const result = await deleteImage(vacancie.curriculum, "curriculum");
+
+    //If file was deleted
+    if (!result) return { msg: "Error deleting file" };
+
+    //Delete vacancie
+    return await Vacancie.findByIdAndDelete(id);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 //Export functions
-module.exports = { save, findAll, findById };
+module.exports = { save, findAll, findById, changeStatus, deleteById };

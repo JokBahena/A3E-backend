@@ -1,6 +1,6 @@
 const Banner = require("../../../models/A3E/banner");
 const { uploadMultimedia } = require("../../../utils/cloudinary/upload");
-const { deleteImage } = require("../../../utils/cloudinary/delete-image");
+const { deleteImage } = require("../../../utils/cloudinary/delete");
 
 //Function to save and send data for banner
 const save = async (title, description, imagePath, link) => {

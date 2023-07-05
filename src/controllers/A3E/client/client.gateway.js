@@ -1,6 +1,6 @@
 const Client = require("../../../models/A3E/client");
 const { uploadMultimedia } = require("../../../utils/cloudinary/upload");
-const { deleteImage } = require("../../../utils/cloudinary/delete-image");
+const { deleteImage } = require("../../../utils/cloudinary/delete");
 
 //Function to save and send data for client
 const save = async (name, imagePath) => {

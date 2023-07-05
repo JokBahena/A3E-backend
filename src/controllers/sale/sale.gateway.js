@@ -3,8 +3,8 @@ const Sale = require("../../models/A3E/sale");
 //Funtion to save a new sale
 const save = async (
   fullName,
-  email,
   phone,
+  email,
   typeService,
   enterprise,
   address,
@@ -22,8 +22,8 @@ const save = async (
     //Create sale
     const sale = new Sale({
       fullName,
-      email,
       phone,
+      email,
       typeService,
       enterprise,
       address,

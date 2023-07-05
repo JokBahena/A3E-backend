@@ -5,14 +5,14 @@ const { save, findAll } = require("./sale.gateway");
 const saveAndFlush = async (req, res = Response) => {
   try {
     //Extract data from body
-    const { fullName, email, phone, typeService, enterprise, address, info } =
+    const { fullName, phone, email, typeService, enterprise, address, info } =
       req.body;
 
     //Call function to save data
     const sale = await save(
       fullName,
-      email,
       phone,
+      email,
       typeService,
       enterprise,
       address,

@@ -25,6 +25,16 @@ const deleteImage = async (link, folder) => {
         const result = await cloudinary.uploader.destroy(`${folder}/${name}`);
         return result;
 
+      case "curriculum":
+        //Get filename, type and name
+        const filename3 = link.substring(link.lastIndexOf("/") + 1);
+        const type3 = path.extname(filename3);
+        const name3 = filename3.replace(type3, "");
+
+        //Delete image
+        const result3 = await cloudinary.uploader.destroy(`${folder}/${name3}`);
+        return result3;
+
       default:
         break;
     }
