@@ -78,8 +78,48 @@ const findById = async (id) => {
   }
 };
 
+//Function to change status intern
+const changeStatus = async (id) => {
+  try {
+    //Find intern by id
+    const intern = await Intern.findById(id);
+
+    //If intern exists
+    if (!intern) return { msg: "Intern not found" };
+
+    //Change status
+    intern.status = !intern.status;
+    
+    //Save intern
+    return await intern.save();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//Funtion to delete intern by id
+const deleteById = async (id) => {
+  try {
+    //Validate fields
+    if (!id) return { msg: "Missing fields" };
+
+    //Find intern by id
+    const intern = await Intern.findById(id);
+
+    //If intern exists
+    if (!intern) return { msg: "Intern not found" };
+
+    //Delete intern
+    return await Intern.findByIdAndDelete(id);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   save,
   findAll,
   findById,
+  changeStatus,
+  deleteById,
 };

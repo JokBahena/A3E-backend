@@ -16,8 +16,10 @@ const save = async (
       return { msg: "Missing fields" };
 
     //If sale exists
-    // const saleExist = await Sale.findOne({ email });
-    // if (saleExist) return { msg: "Sale already exists" };
+    const saleExist = await Sale.findOne({
+      $or: [{ email: email }, { enterprise: enterprise }],
+    });
+    if (saleExist) return { msg: "Your request is already registered" };
 
     //Create sale
     const sale = new Sale({
@@ -48,8 +50,45 @@ const findAll = async () => {
   }
 };
 
+//Function to change sale status
+const changeStatus = async (id) => {
+  try {
+    //Find sale
+    const sale = await Sale.findById(id);
+
+    //If sale not found
+    if (!sale) return { msg: "Sale not found" };
+
+    //Change status
+    sale.status = !sale.status;
+
+    //Save sale
+    return await sale.save();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//Function to delete sale
+const deleteSale = async (id) => {
+  try {
+    //Find sale
+    const sale = await Sale.findById(id);
+
+    //If sale not found
+    if (!sale) return { msg: "Sale not found" };
+
+    //Delete sale
+    return await Sale.findByIdAndDelete(id);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 //Export functions
 module.exports = {
   save,
   findAll,
+  changeStatus,
+  deleteSale,
 };
