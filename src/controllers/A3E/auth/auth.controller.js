@@ -18,7 +18,7 @@ const signin = async (req, res = Response) => {
       return res.status(400).json({ msg: token.msg });
     }
 
-    return res.status(200).json({ msg: "User logged", token });
+    return res.status(200).json({ msg: "User logged", token, data: token.data });
   } catch (error) {
     console.log(error);
     res.status(400).json({
@@ -70,7 +70,11 @@ const renewToken = async (req, res = Response) => {
 
     return res
       .status(200)
-      .json({ msg: "Token renewed", token: newToken.token });
+      .json({
+        msg: "Token renewed",
+        token: newToken.token,
+        data: newToken.data,
+      });
   } catch (error) {
     console.log(error);
     res.status(400).json({

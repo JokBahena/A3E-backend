@@ -23,6 +23,12 @@ const login = async (email, password) => {
           name: userExist.name,
           role: userExist.role,
         }),
+
+        data: {
+          id: userExist._id,
+          name: userExist.name,
+          role: userExist.role,
+        },
       };
     }
     return { msg: "Invalid password" };
@@ -52,8 +58,15 @@ const renew = async (token) => {
         id: userExist._id,
         email: userExist.email,
         name: userExist.name,
+        lastname: userExist.lastname,
         role: userExist.role,
       }),
+      data: {
+          id: userExist._id,
+          name: userExist.name,
+          lastname: userExist.lastname,
+          role: userExist.role,
+        },
     };
   } catch (error) {
     console.log(error);
