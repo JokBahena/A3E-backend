@@ -6,7 +6,7 @@ const bannerSchema = new moongose.Schema({
   description: { type: String },
   image: { type: String, required: true },
   link: { type: String },
-  status: { type: Boolean, default: true },
+  status: { type: Boolean, default: false },
 });
 
 //Export model
