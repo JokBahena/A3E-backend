@@ -3,6 +3,9 @@ const mongoose = require("mongoose")
 const newSchema = new mongoose.Schema({
     title: { type: String, required: true, unique: true },
     type:{type: String, required: true},
+    summary: {required:true, type:String},
+    date: {type:String},
+    user:{type:String},
     content: { type: String, required: true },
 })
 
