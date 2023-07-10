@@ -7,6 +7,9 @@ const {
   deleteById,
 } = require("./vacancie.gateway");
 const { uploadFile } = require("../../../../config/multer-config");
+const {
+  validationRecaptcha,
+} = require("../../../../utils/validation-recaptcha");
 
 //Function to save and send data
 const saveAndFlush = async (req, res = Response) => {
@@ -21,7 +24,16 @@ const saveAndFlush = async (req, res = Response) => {
       education,
       position,
       source,
+      tokenRecaptcha,
     } = req.body;
+
+    //Validate recaptcha
+    const responseRecaptcha = await validationRecaptcha(tokenRecaptcha);
+    console.log(responseRecaptcha);
+
+    //If recaptcha is not valid
+    if (!responseRecaptcha.success)
+      return res.status(400).json({ msg: "Recaptcha is not valid" });
 
     // Get the file path
     const curriculumPath = req.file.path;
@@ -111,7 +123,7 @@ const deleteVacancie = async (req, res = Response) => {
 
     //Call function to change vacancie status
     const vacancie = await deleteById(id);
-    
+
     //If user exists
     if (vacancie.msg) return res.status(400).json({ msg: vacancie.msg });
     return res.status(200).json({ msg: "Vacancie deleted" });

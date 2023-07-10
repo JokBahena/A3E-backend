@@ -6,6 +6,9 @@ const {
   changeStatus,
   deleteById,
 } = require("./intern.gateway");
+const {
+  validationRecaptcha,
+} = require("../../../../utils/validation-recaptcha");
 
 const saveAndFlush = async (req, res = Response) => {
   try {
@@ -20,7 +23,16 @@ const saveAndFlush = async (req, res = Response) => {
       degree,
       period,
       info,
+      tokenRecaptcha,
     } = req.body;
+
+    //Validate recaptcha
+    const responseRecaptcha = await validationRecaptcha(tokenRecaptcha);
+    console.log(responseRecaptcha);
+
+    //If recaptcha is not valid
+    if (!responseRecaptcha.success)
+      return res.status(400).json({ msg: "Recaptcha is not valid" });
 
     //Call function to save data
     const intern = await save(
