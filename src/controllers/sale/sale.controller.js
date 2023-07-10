@@ -1,12 +1,29 @@
 const { Response, Router } = require("express");
 const { save, findAll, changeStatus, deleteSale } = require("./sale.gateway");
+const { validationRecaptcha } = require("../../utils/validation-recaptcha");
 
 //Function to save and send data for sale
 const saveAndFlush = async (req, res = Response) => {
   try {
     //Extract data from body
-    const { fullName, phone, email, typeService, enterprise, address, info } =
-      req.body;
+    const {
+      fullName,
+      phone,
+      email,
+      typeService,
+      enterprise,
+      address,
+      info,
+      tokenRecaptcha,
+    } = req.body;
+
+    //Validate recaptcha
+    const responseRecaptcha = await validationRecaptcha(tokenRecaptcha);
+    console.log(responseRecaptcha);
+
+    //If recaptcha is not valid
+    if (!responseRecaptcha.success)
+      return res.status(400).json({ msg: "Recaptcha is not valid" });
 
     //Call function to save data
     const sale = await save(
