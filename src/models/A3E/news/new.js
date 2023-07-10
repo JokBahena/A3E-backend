@@ -5,7 +5,7 @@ const newSchema = new mongoose.Schema({
     type:{type: String, required: true},
     summary: {required:true, type:String},
     date: {type:String},
-    user:{type:String},
+    author:{type:String},
     content: { type: String, required: true },
 })
 
