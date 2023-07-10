@@ -68,9 +68,9 @@ const updateById = async (req, res = Response) => {
   try {
     const { id } = req.params;
 
-    const { title, content } = req.body;
+    const { title, type, summary ,content } = req.body;
 
-    const dataNew = await update(id, title, content);
+    const dataNew = await update(id, title, type,summary,content);
 
     if (dataNew.msg)
       return res.status(400).json({

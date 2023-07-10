@@ -48,22 +48,24 @@ const findById = async (id) => {
   }
 };
 
-const update = async (id, title, content) => {
+const update = async (id, title, type, summary, content) => {
   try {
     if (!title) return { msg: "Title is required" };
 
     const dataNew = await New.findById(id);
     if (!dataNew) return { msg: "New not found" };
 
-    if (title === dataNew.title) {
+    if (title !== dataNew.title) {
       const newExist = await New.findOne({
         title,
       });
-      if (dataNew) return { msg: "New already exists" };
+      if (newExist) return { msg: "New already exists" };
     }
 
     dataNew.title = title;
-    dataNew.title = title;
+    dataNew.type = type;
+    dataNew.summary = summary;
+    dataNew.content = content
 
     return await dataNew.save();
   } catch (error) {
