@@ -37,5 +37,17 @@ const save = async (name, lastname, email, password) => {
   }
 };
 
+//Function to get user
+const findById = async (id) => {
+  try {
+    //Find user by id
+    const user = await User.findById(id);
+    if (!user) return { msg: "User not found" };
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 //Export function
-module.exports = { save };
+module.exports = { save, findById };
