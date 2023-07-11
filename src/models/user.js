@@ -6,8 +6,9 @@ const userSchema = new mongoose.Schema({
   lastname: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  gender: { type: String, required: true },
   role: { type: String, default: "admin" },
-  status: { type: Boolean, default: true },
+  status: { type: Boolean, default: false },
 });
 
 //Export model

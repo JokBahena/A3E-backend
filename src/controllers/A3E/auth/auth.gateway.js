@@ -56,17 +56,15 @@ const renew = async (token) => {
     return {
       token: generateToken({
         id: userExist._id,
-        email: userExist.email,
         name: userExist.name,
-        lastname: userExist.lastname,
         role: userExist.role,
       }),
       data: {
-          id: userExist._id,
-          name: userExist.name,
-          lastname: userExist.lastname,
-          role: userExist.role,
-        },
+        id: userExist._id,
+        name: userExist.name,
+        lastname: userExist.lastname,
+        role: userExist.role,
+      },
     };
   } catch (error) {
     console.log(error);
