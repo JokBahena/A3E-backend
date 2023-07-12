@@ -13,6 +13,9 @@ const login = async (email, password) => {
     //Validate user
     if (!userExist) return { msg: "User not found" };
 
+    //Validate status
+    if (userExist.status) return { msg: "User disabled" };
+
     //Validate password
     if (await validatePassword(password, userExist.password)) {
       //Generate token

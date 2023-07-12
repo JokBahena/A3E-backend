@@ -3,18 +3,15 @@ const { validatePassword } = require("../../utils/password/validate-password");
 const User = require("../../models/user");
 
 //Function to save and send data
-const save = async (name, lastname, email, password, gender) => {
+const save = async (name, lastname, email, password, gender, role) => {
   try {
     //Validate fields
-    if (!name || !lastname || !email || !password || !gender)
+    if (!name || !lastname || !email || !password || !gender || !role)
       return { msg: "Missing fields" };
 
     //Validate email
     const validDomain = email.endsWith("@a3e.com.mx");
-    if (!validDomain)
-      return {
-        msg: "Invalid email domain. Only @a3e.com.mx domain is allowed.",
-      };
+    if (!validDomain) return { msg: "Invalid email domain" };
 
     //If user exists
     const userExist = await User.findOne({ email });
@@ -30,10 +27,21 @@ const save = async (name, lastname, email, password, gender) => {
       email,
       password: hashedPassword,
       gender,
+      role,
     });
 
     //Save user
     return await user.save();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//Function to get all users
+const findAll = async () => {
+  try {
+    //Find all users
+    return await User.find();
   } catch (error) {
     console.log(error);
   }
@@ -80,6 +88,7 @@ const update = async (id, name, lastname, email, password) => {
   }
 };
 
+//Function to update password
 const updatePassword = async (id, password, newPassword) => {
   try {
     //Find user by id
@@ -105,5 +114,48 @@ const updatePassword = async (id, password, newPassword) => {
   }
 };
 
+//Function to change user status
+const changeStatus = async (id) => {
+  try {
+    //Find user by id
+    const user = await User.findById(id);
+
+    //If user exists
+    if (!user) return { msg: "User not found" };
+
+    //Update user
+    user.status = !user.status;
+
+    //Save user
+    return await user.save();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//Function to delete user
+const deleteUser = async (id) => {
+  try {
+    //Find user by id
+    const user = await User.findById(id);
+
+    //If user exists
+    if (!user) return { msg: "User not found" };
+
+    //Delete user
+    return await User.findByIdAndDelete(id);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 //Export function
-module.exports = { save, findById, update, updatePassword };
+module.exports = {
+  save,
+  findAll,
+  findById,
+  update,
+  updatePassword,
+  changeStatus,
+  deleteUser,
+};
